@@ -1,4 +1,3 @@
-// Written by Kelanel
 // This macro is intended to only be used if you silo your monsters by folder, and they all have the same scale, otherwise you will get unintended images!
 
 // Usage: Select tokens you want randomized and execute until you like the randomization! Works for videos too!
