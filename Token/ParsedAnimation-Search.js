@@ -37,7 +37,7 @@ for(let nextToken of canvas.tokens.controlled) {
     		if (search1 >= 0 && search2 >= 0) { //charname and search name must match to continue
 
     			console.log("Image found: " + fname);
-    			let sstring = imagefile.split("_"); //pull framecount
+    			let sstring = fname.split("_"); //pull framecount
     			let parsedtimeout = parseFloat( sstring[sstring.length - 1].split(".")[0]) //parse framecount into number
     			if (isNaN(parsedtimeout)) {
     			    
