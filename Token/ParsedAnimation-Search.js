@@ -1,10 +1,11 @@
 //written by Kelanel 
 //For usage with VAM(Vivid adeventure maps) animated tokens.
 //Expecting a specific filename layout to use for character matching, animation searches, and frame counts for timecodes
-//Example: VAM_MonkMMA_Attack2LegSweep_0122.webm
+//Example: VAM_MonkMMA_Attack2LegSweep_0001-0122.webm
 // "MonkMMA" is considered the character name and only files with this after the first underscore will be used by macro matching the currently assigned filename
 // "Attack2LegSweep" is used by the search string below to filter what actions you like to select from. Be more specific to filter between specific files
-// "0122" is the numbered frame count at the end of the filename and must be after the last underscore. This is expect to be running at 30fps and will be multiplied as such.
+// "0001-0122" is the numbered frame start and count at the end of the filename and must be after the last underscore. The 2nd of the two numbers is used to calculate for animation length.
+//  This is expect to be running at 30fps and will be multiplied as such.
 // All requirements must be filled above to work properly. The current image file will be updated with the animation for x time, then reverted to the original image.
 //This works best with MidiQOL's Macro on action to tie to specific actions of actors. Make one macro per search parameter, otherwise this macro can be used on multiple chars
 
@@ -38,7 +39,8 @@ for(let nextToken of canvas.tokens.controlled) {
 
     			console.log("Image found: " + fname);
     			let sstring = fname.split("_"); //pull framecount
-    			let parsedtimeout = parseFloat( sstring[sstring.length - 1].split(".")[0]) //parse framecount into number
+    			let framecount = sstring[sstring.length - 1].split("-")[1]
+    			let parsedtimeout = parseFloat( framecount.split(".")[0]) //parse framecount into number
     			if (isNaN(parsedtimeout)) {
     			    
     			    console.log("could not parse animation time due to missing time code!"); //failed to parse
