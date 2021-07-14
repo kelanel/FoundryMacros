@@ -100,12 +100,10 @@ for(let nextToken of defeated) {
     	    nextToken.update({ "img": finalimage });
             nextToken.refresh();
     	} else if (AnimArray.length == 0 && StaticArray.length > 0) { // single animation found, no randomization
-    	
-    	    
-    	    
-			let finalimage = StaticArray[0]
+    	   	    
+            let finalimage = StaticArray[0]
             //console.log(image);
-            
+            nextToken.update({ "originalimg": originalimg }) //backup original image incase of undo.
     	    console.log("No Animation found, Assigning new static Path: " + finalimage );
     	    nextToken.update({ "img": finalimage });
             nextToken.refresh();
