@@ -1,0 +1,35 @@
+//written by Kelanel 
+//For usage with VAM(Vivid adeventure maps) animated tokens.
+//Expecting a specific filename layout to use for character matching, animation searches, and frame counts for timecodes
+//Example: VAM_MonkMMA_Attack2LegSweep_0122.webm
+// "MonkMMA" is considered the character name and only files with this after the first underscore will be used by macro matching the currently assigned filename
+// "Attack2LegSweep" is used by the search string below to filter what actions you like to select from. Be more specific to filter between specific files
+// "0122" is the numbered frame count at the end of the filename and must be after the last underscore. This is expect to be running at 30fps and will be multiplied as such.
+// All requirements must be filled above to work properly. The current image file will be updated with the animation for x time, then reverted to the original image.
+//This works best with MidiQOL's Macro on action to tie to specific actions of actors. Make one macro per search parameter, otherwise this macro can be used on multiple chars
+
+
+
+
+//loop through all selected tokens.
+for(let nextToken of canvas.tokens.controlled) {
+    try { //exception handling
+        let originalimg = nextToken.document.getFlag("world", "originalimg"); //backup current image for later.
+    	if (originalimg != null && originalimg != "") { 
+    	     console.log("Found backup image to revert to. Setting HP to 1(if zero) and Updating Image to: " + originalimg)
+    	    //nextToken.data.actorData.data.attributes.hp.value = 1 ;
+    	    if (nextToken.document.actor.data.data.attributes.hp.value != null && nextToken.document.actor.data.data.attributes.hp.value == 0) {
+				nextToken.document.actor.update({"data.attributes.hp.value" : 1}) //backup original image incase of undo.
+    	    }
+			nextToken.document.update({ "img": originalimg }) //backup original image incase of undo.
+       
+            nextToken.refresh();
+    	} else { //no animations found
+    	    ui.notifications.warn("No original image found for idle " + nextToken.name +"!");
+    	}
+    } catch (err) { //ui catch
+            ui.notifications.error(`Error processing ${nextToken.name}, ERROR: ${err}`);
+            console.log(`Error processing ${nextToken.name}, ERROR: ${err}`);
+    }
+	//end of loop. next token
+}
